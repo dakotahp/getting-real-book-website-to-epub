@@ -73,12 +73,12 @@ def build_epub_html(chapters):
 <body>
 <div style="background-color:#2b2b2b;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:10% 12%;box-sizing:border-box;">
   <div>
-    <h1 style="color:#ffffff;font-size:3em;font-weight:bold;font-style:italic;margin:0 0 0.4em 0;letter-spacing:-0.02em;line-height:1.1;">Getting Real</h1>
-    <p style="color:#cccccc;font-size:1.2em;font-style:italic;margin:0;line-height:1.5;">The smarter, faster, easier way to build<br/>a successful web application</p>
+    <h1 style="color:#ffffff;font-size:16em;font-weight:bold;font-style:italic;margin:0 0 0.4em 0;letter-spacing:-0.02em;line-height:1.1;">Getting Real</h1>
+    <p style="color:#cccccc;font-size:4.8em;font-style:italic;margin:0;line-height:1.5;">The smarter, faster, easier way to build a successful web application</p>
   </div>
   <div>
-    <p style="color:#cccccc;font-size:1em;font-style:italic;margin:0 0 0.5em 0;">by Basecamp</p>
-    <p style="color:#888888;font-size:0.75em;margin:0;">Copyright &#169;1999-2025 37signals LLC. All rights reserved.</p>
+    <p style="color:#cccccc;font-size:4em;font-style:italic;margin:0 0 0.5em 0;">by Basecamp</p>
+    <p style="color:#888888;font-size:1.2em;margin:0;">Copyright &#169;1999-2025 37signals LLC. All rights reserved.</p>
   </div>
 </div>
 <div style="page-break-after:always;"></div>
