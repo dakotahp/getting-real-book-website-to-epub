@@ -78,10 +78,11 @@ def build_epub_html(chapters):
 
     for slug, chapter_label, chapter_title, html in chapters:
         anchor = slug.replace("/gettingreal/", "").replace("-", "_")
-        header = f'<h2 id="{anchor}">'
         if chapter_label:
-            header += f'<small>{chapter_label}</small><br/>'
-        header += f'{chapter_title}</h2>'
+            full_title = f'{chapter_label} {chapter_title}'
+        else:
+            full_title = chapter_title
+        header = f'<h2 id="{anchor}">{full_title}</h2>'
         parts.append(header)
         parts.append(html)
         parts.append("")
@@ -104,19 +105,14 @@ def main():
         if cache_file.exists():
             print(f"[{i:2}/{len(urls)}] (cached) {slug}")
             raw = cache_file.read_text()
-            # Re-parse cached file to extract label/title
-            soup = BeautifulSoup(f"<div>{raw}</div>", "html.parser")
-            h2 = soup.find("h2")
-            label = ""
-            title = slug.split("/")[-1]
-            if h2:
-                small = h2.find("small")
-                label = small.get_text(strip=True) if small else ""
-                if small:
-                    small.decompose()
-                title = h2.get_text(strip=True)
-            # Read the content after the h2
-            content_html = cache_file.read_text()
+            first_line, _, content_html = raw.partition("\n")
+            if first_line.startswith("<!-- META:"):
+                meta = first_line[10:-4]  # strip "<!-- META:" and " -->"
+                label, title = meta.split("|", 1)
+            else:
+                # Old cache file without metadata — treat as stale
+                label, title = "", slug.split("/")[-1]
+                content_html = raw
             chapters.append((slug, label, title, content_html))
             continue
 
@@ -124,7 +120,7 @@ def main():
         try:
             html, label, title = scrape_chapter(url)
             if html:
-                cache_file.write_text(html)
+                cache_file.write_text(f"<!-- META:{label}|{title} -->\n{html}")
                 chapters.append((slug, label, title, html))
             else:
                 print(f"  WARNING: no content found for {url}")
