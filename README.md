@@ -29,6 +29,8 @@ ebook-convert getting-real.html getting-real.epub \
   --no-default-epub-cover
 ```
 
+When complete, `getting-real.epub` will be in the current directory — open it with your e-reader or import it into Calibre.
+
 The script caches each chapter as an individual HTML file under `chapters/` so re-runs are fast and don't re-fetch pages that already exist.
 
 ## Output
