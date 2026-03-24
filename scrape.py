@@ -55,6 +55,13 @@ def scrape_chapter(url):
     for tag in content_div.find_all(class_="footer__copyright"):
         tag.decompose()
 
+    # Remove the per-chapter Basecamp promo addendum
+    PROMO_MARKER = "We made Basecamp using the principles in this book."
+    for tag in content_div.find_all(True):
+        if PROMO_MARKER in tag.get_text():
+            tag.decompose()
+            break
+
     # Remove anchor icon links injected by JS (they render as empty <a> tags)
     for a in content_div.find_all("a", class_="anchor"):
         a.decompose()
