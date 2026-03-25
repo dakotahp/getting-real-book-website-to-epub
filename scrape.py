@@ -99,6 +99,10 @@ def build_epub_html(chapters):
             full_title = chapter_title
         header = f'<h2 id="{anchor}">{full_title}</h2>'
         parts.append(header)
+        # Demote in-content headings so they nest under the chapter h2 in the TOC.
+        # h3→h4 must happen before h2→h3 to avoid double-shifting.
+        html = re.sub(r'<(/?)h3(\b)', r'<\1h4\2', html)
+        html = re.sub(r'<(/?)h2(\b)', r'<\1h3\2', html)
         parts.append(html)
         parts.append("")
 
@@ -155,6 +159,7 @@ def main():
     print(f"    --authors 'Basecamp (37signals)' \\")
     print(f"    --language en \\")
     print(f"    --level1-toc '//h:h2' \\")
+    print(f"    --level2-toc '//h:h3' \\")
     print(f"    --no-default-epub-cover")
 
 if __name__ == "__main__":

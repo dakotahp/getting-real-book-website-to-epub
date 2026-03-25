@@ -19,7 +19,7 @@ pip install beautifulsoup4 requests
 python3 scrape.py
 ebook-convert getting-real.html getting-real.epub \
   --title 'Getting Real' --authors 'Basecamp (37signals)' \
-  --language en --level1-toc '//h:h2' --no-default-epub-cover
+  --language en --level1-toc '//h:h2' --level2-toc '//h:h3' --no-default-epub-cover
 ```
 
 ## Architecture
@@ -35,4 +35,4 @@ Chapters are cached to `chapters/<slug>.html` so re-runs skip already-fetched pa
 
 - `resp.content.decode("utf-8")` is used instead of `resp.text` to avoid requests misdetecting the charset and double-encoding smart quotes
 - Copyright appears once on the opening page and is stripped from each chapter's footer
-- Calibre auto-generates a 217-entry navigation TOC from the heading hierarchy
+- In-content `h2`/`h3` tags from scraped chapters are demoted to `h3`/`h4` in `build_epub_html` so chapter titles (the injected `h2`) are the sole level-1 TOC entries; subheadings nest beneath them as level-2

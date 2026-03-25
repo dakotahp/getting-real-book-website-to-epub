@@ -26,6 +26,7 @@ ebook-convert getting-real.html getting-real.epub \
   --authors 'Basecamp (37signals)' \
   --language en \
   --level1-toc '//h:h2' \
+  --level2-toc '//h:h3' \
   --no-default-epub-cover
 ```
 
